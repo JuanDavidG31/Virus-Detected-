@@ -7,18 +7,28 @@ public class UserDTO {
 	private String password;
 	private String gmail;
 	private boolean verify;
+	private boolean admin;
 
 	public UserDTO() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UserDTO(String name, String user, String password, String gmail, boolean verify) {
+	public UserDTO(String name, String user, String password, String gmail, boolean verify, boolean admin) {
 		super();
 		this.name = name;
 		this.user = user;
 		this.password = password;
 		this.gmail = gmail;
 		this.verify = verify;
+		this.admin = admin;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	public String getName() {
@@ -72,7 +82,7 @@ public class UserDTO {
 	@Override
 	public String toString() {
 		return "UserDTO [id=" + id + ", name=" + name + ", user=" + user + ", password=" + password + ", gmail=" + gmail
-				+ ", verify=" + verify + "]";
+				+ ", verify=" + verify + ", admin=" + admin + "]";
 	}
 
 }

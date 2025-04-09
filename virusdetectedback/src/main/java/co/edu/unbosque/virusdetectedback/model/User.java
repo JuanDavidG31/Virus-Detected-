@@ -18,18 +18,28 @@ public class User {
 	@Column(unique = true)
 	private String gmail;
 	private boolean verify;
+	private boolean admin;
 
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public User(String name, String user, String password, String gmail, boolean verify) {
+	public User(String name, String user, String password, String gmail, boolean verify, boolean admin) {
 		super();
 		this.name = name;
 		this.user = user;
 		this.password = password;
 		this.gmail = gmail;
 		this.verify = verify;
+		this.admin = admin;
+	}
+
+	public boolean isAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	public String getName() {
@@ -83,7 +93,7 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", user=" + user + ", password=" + password + ", gmail=" + gmail
-				+ ", verify=" + verify + "]";
+				+ ", verify=" + verify + ", admin=" + admin + "]";
 	}
 
 }
