@@ -22,6 +22,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import co.edu.unbosque.virusdetectedback.dto.GeminiDTO;
 import co.edu.unbosque.virusdetectedback.dto.VirusTotalDTO;
 
 public class ExternalHTTPRequestHandler {
@@ -115,6 +116,37 @@ public class ExternalHTTPRequestHandler {
 			dto.setMd5(root.at("/meta/file_info/md5").asText());
 			dto.setSha1(root.at("/meta/file_info/sha1").asText());
 
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return dto;
+	}
+
+	public static GeminiDTO postAndConvertToDTOGemini(String urlWithApiKey, String jsonRequestBody) {
+		HttpRequest request = HttpRequest.newBuilder().uri(URI.create(urlWithApiKey))
+				.header("Content-Type", "application/json").POST(HttpRequest.BodyPublishers.ofString(jsonRequestBody))
+				.build();
+
+		HttpResponse<String> response;
+
+		try {
+			response = HTTP_CLIENT.send(request, HttpResponse.BodyHandlers.ofString());
+		} catch (IOException | InterruptedException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		String jsonResponse = response.body();
+		ObjectMapper mapper = new ObjectMapper();
+
+		GeminiDTO dto = new GeminiDTO();
+
+		try {
+			JsonNode root = mapper.readTree(jsonResponse);
+			String text = root.at("/candidates/0/content/parts/0/text").asText();
+			System.out.println(text);
+			dto.setText(text);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
