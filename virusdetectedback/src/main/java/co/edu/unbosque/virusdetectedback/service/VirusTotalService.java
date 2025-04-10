@@ -24,12 +24,10 @@ public class VirusTotalService {
 		// TODO Auto-generated constructor stub
 	}
 
-	public VirusTotalDTO uploadfile(File file) {
+	public VirusTotalDTO uploadfile(File file, String apikey) {
 
-		String id = ExternalHTTPRequestHandler.toPostFileAndConvertToDTOVirus(url + "files",
-				"2c45c2507d4362d2881e6780f5aeff2147a290f13141f3b522b6494f8b979588", file);
-		VirusTotalDTO virus = ExternalHTTPRequestHandler.toGetAndConvertToDTOVirus(url + "analyses/" + id,
-				"2c45c2507d4362d2881e6780f5aeff2147a290f13141f3b522b6494f8b979588");
+		String id = ExternalHTTPRequestHandler.toPostFileAndConvertToDTOVirus(url + "files", apikey, file);
+		VirusTotalDTO virus = ExternalHTTPRequestHandler.toGetAndConvertToDTOVirus(url + "analyses/" + id, apikey);
 		return virus;
 
 	}

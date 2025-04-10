@@ -35,14 +35,14 @@ public class VirusTotalController {
 
 	@PostMapping(value = "/showVirus", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseEntity<ArrayList<VirusTotalDTO>> showVirus(
-			@Parameter(description = "Archivo a analizar", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestParam("file") MultipartFile multipartFile) {
+			@Parameter(description = "Archivo a analizar", required = true, content = @Content(mediaType = MediaType.APPLICATION_OCTET_STREAM_VALUE, schema = @Schema(type = "string", format = "binary"))) @RequestParam("file") MultipartFile multipartFile, @RequestParam String apikey) {
 
 		ArrayList<VirusTotalDTO> virus = new ArrayList<>();
 
 		try {
 			File file = File.createTempFile("upload-", multipartFile.getOriginalFilename());
 			multipartFile.transferTo(file);
-			VirusTotalDTO tVirus = virusServ.uploadfile(file);
+			VirusTotalDTO tVirus = virusServ.uploadfile(file,apikey);
 			virus.add(tVirus);
 			virusServ.create(tVirus);
 
