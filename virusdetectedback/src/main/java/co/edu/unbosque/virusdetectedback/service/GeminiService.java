@@ -21,7 +21,7 @@ public class GeminiService {
 	@Autowired
 	private ModelMapper modelMapper;
 
-	private final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyBOVU2UUEkshLPd7r0pf6Gn1p8a-vt9mn8";
+	private final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
 
 	public GeminiDTO getText(String hash) {
 
