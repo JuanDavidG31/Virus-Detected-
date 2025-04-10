@@ -23,7 +23,7 @@ public class GeminiService {
 
 	private final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
 
-	public GeminiDTO getText(String hash) {
+	public GeminiDTO getText(String hash,String apykey) {
 
 		String prompt = """
 				{
@@ -40,7 +40,7 @@ public class GeminiService {
 				"""
 				.formatted(hash);
 
-		return ExternalHTTPRequestHandler.postAndConvertToDTOGemini(URL, prompt);
+		return ExternalHTTPRequestHandler.postAndConvertToDTOGemini(URL+apykey, prompt);
 	}
 
 	public int create(GeminiDTO data) {
