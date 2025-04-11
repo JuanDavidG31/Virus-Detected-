@@ -34,7 +34,27 @@ public class GeminiController {
 		gemini = geminiServ.getText(hash, apikey);
 		ArrayList<GeminiDTO> geminiList = new ArrayList<>();
 		geminiList.add(gemini);
-		// geminiServ.create(gemini);
+		boolean acepted = true;
+
+		String name = null;
+		ArrayList<GeminiDTO> tGemini = geminiServ.findAll();
+
+		main: for (GeminiDTO tG : tGemini) {
+			name = tG.getName();
+			for (GeminiDTO g : geminiList) {
+
+				if (g.getName().equals(name)) {
+					acepted = false;
+					break main;
+				}
+			}
+			name = null;
+		}
+
+		if (acepted) {
+			geminiServ.create(gemini);
+
+		}
 
 		if (geminiList.isEmpty()) {
 			return new ResponseEntity<>(geminiList, HttpStatus.NO_CONTENT);
@@ -60,11 +80,11 @@ public class GeminiController {
 
 	@GetMapping("/showAll")
 	public ResponseEntity<ArrayList<GeminiDTO>> showAll() {
-		ArrayList<GeminiDTO> virus = geminiServ.findAll();
-		if (virus.isEmpty()) {
-			return new ResponseEntity<>(virus, HttpStatus.NO_CONTENT);
+		ArrayList<GeminiDTO> gemini = geminiServ.findAll();
+		if (gemini.isEmpty()) {
+			return new ResponseEntity<>(gemini, HttpStatus.NO_CONTENT);
 		} else {
-			return new ResponseEntity<>(virus, HttpStatus.ACCEPTED);
+			return new ResponseEntity<>(gemini, HttpStatus.ACCEPTED);
 		}
 	}
 

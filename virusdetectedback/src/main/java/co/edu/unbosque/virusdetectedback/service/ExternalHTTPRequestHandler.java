@@ -144,12 +144,8 @@ public class ExternalHTTPRequestHandler {
 		try {
 			JsonNode root = mapper.readTree(jsonResponse);
 			String rawText = root.at("/candidates/0/content/parts/0/text").asText();
-			System.out.println("Texto recibido de Gemini:\n" + rawText);
-
-			String cleanedText = rawText.replaceAll("(?i)^```json\\s*", "") // quita encabezado ```json
-					.replaceAll("(?i)^```\\s*", "") // o solo ```
-					.replaceAll("(?i)\\s*```$", "") // quita cierre ```
-					.trim();
+			String cleanedText = rawText.replaceAll("(?i)^```json\\s*", "").replaceAll("(?i)^```\\s*", "")
+					.replaceAll("(?i)\\s*```$", "").trim();
 
 			JsonNode textJson = mapper.readTree(cleanedText);
 			String name = textJson.get("name").asText();

@@ -1,5 +1,6 @@
 package co.edu.unbosque.virusdetectedback.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,7 +11,9 @@ import jakarta.persistence.Table;
 @Table(name = "gemini")
 public class Gemini {
 	private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) Integer tId;
+	@Column(columnDefinition = "TEXT")
 	private String text;
+	@Column(unique = true)
 	private String name;
 
 	public Gemini() {
