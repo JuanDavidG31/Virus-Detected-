@@ -30,9 +30,11 @@ public class GeminiController {
 
 	@PostMapping("/traerTexto")
 	public ResponseEntity<ArrayList<GeminiDTO>> getText(@RequestParam String hash, @RequestParam String apikey) {
-
+		GeminiDTO gemini = new GeminiDTO();
+		gemini = geminiServ.getText(hash, apikey);
 		ArrayList<GeminiDTO> geminiList = new ArrayList<>();
-		geminiList.add(geminiServ.getText(hash,apikey));
+		geminiList.add(gemini);
+		// geminiServ.create(gemini);
 
 		if (geminiList.isEmpty()) {
 			return new ResponseEntity<>(geminiList, HttpStatus.NO_CONTENT);

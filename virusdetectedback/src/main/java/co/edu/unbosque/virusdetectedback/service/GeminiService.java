@@ -23,7 +23,7 @@ public class GeminiService {
 
 	private final String URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=";
 
-	public GeminiDTO getText(String hash,String apykey) {
+	public GeminiDTO getText(String hash, String apykey) {
 
 		String prompt = """
 				{
@@ -31,7 +31,7 @@ public class GeminiService {
 				    {
 				      "parts": [
 				        {
-				          "text": "Te voy a dar un hash SHA256 que corresponde a un archivo. Quiero que me digas el nombre del posible malware o virus informático asociado a ese hash (si es que es conocido públicamente), y luego proporciona una breve descripción de cómo funciona o qué hace ese virus. Sé específico y claro en la descripción, sin exceder un párrafo.\\n\\nHash: %s"
+				          "text": "Te voy a dar un hash SHA256 que corresponde a un archivo. Quiero que me devuelvas un JSON con dos claves: 'name', que contenga el nombre del posible malware o virus informático asociado a ese hash (si es conocido públicamente), y 'text', que contenga una breve explicación de qué hace o cómo funciona ese virus. Sé claro, preciso y no uses más de un párrafo.\\n\\nHash: %s"
 				        }
 				      ]
 				    }
@@ -40,7 +40,7 @@ public class GeminiService {
 				"""
 				.formatted(hash);
 
-		return ExternalHTTPRequestHandler.postAndConvertToDTOGemini(URL+apykey, prompt);
+		return ExternalHTTPRequestHandler.postAndConvertToDTOGemini(URL + apykey, prompt);
 	}
 
 	public int create(GeminiDTO data) {

@@ -139,14 +139,24 @@ public class ExternalHTTPRequestHandler {
 
 		String jsonResponse = response.body();
 		ObjectMapper mapper = new ObjectMapper();
-
 		GeminiDTO dto = new GeminiDTO();
 
 		try {
 			JsonNode root = mapper.readTree(jsonResponse);
-			String text = root.at("/candidates/0/content/parts/0/text").asText();
-			System.out.println(text);
-			dto.setText(text);
+			String rawText = root.at("/candidates/0/content/parts/0/text").asText();
+			System.out.println("Texto recibido de Gemini:\n" + rawText);
+
+			String cleanedText = rawText.replaceAll("(?i)^```json\\s*", "") // quita encabezado ```json
+					.replaceAll("(?i)^```\\s*", "") // o solo ```
+					.replaceAll("(?i)\\s*```$", "") // quita cierre ```
+					.trim();
+
+			JsonNode textJson = mapper.readTree(cleanedText);
+			String name = textJson.get("name").asText();
+			String description = textJson.get("text").asText();
+
+			dto.setText(description);
+			dto.setName(name);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
